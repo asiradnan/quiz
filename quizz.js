@@ -16,6 +16,12 @@ nextButton.addEventListener("click", next)
 
 startButton.addEventListener("click", startQuizz)
 
+function finishQuiz() {
+    startButton.disabled = false
+    timerFlag = true
+    currentIdx = 0
+    time = 0
+}
 function next() {
     const selected = document.querySelector("input[type='radio']:checked")
     if (!selected) {
@@ -33,7 +39,7 @@ function next() {
             if (quiz.correct_answer == quiz.selected) correctCount++
         })
         alert(`Score: ${correctCount}`)
-
+        finishQuiz()
     }
     else {
         currentIdx += 1
@@ -60,16 +66,24 @@ function startQuizz() {
 async function fetchQuizzes() {
     isLoading = true
     displayConditionalLoading()
-    const response = await fetch("https://opentdb.com/api.php?amount=5")
-    const data = await response.json()
-    isLoading = false
-    console.log(data)
-    quizzes = data["results"]
-    console.log(quizzes)
-    displayConditionalLoading()
-    timer.innerHTML = time
-    startTimer()
-    displayQuizz()
+    try {
+        const response = await fetch("https://opentdb.com/api.php?amount=5")
+        const data = await response.json()
+
+        console.log(data)
+        quizzes = data["results"]
+        console.log(quizzes)
+        timer.innerHTML = time
+        startTimer()
+        displayQuizz()
+    }
+    catch (error) {
+        console.log(error)
+    }
+    finally {
+        isLoading = false
+        displayConditionalLoading()
+    }
 }
 
 function displayConditionalLoading() {
