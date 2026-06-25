@@ -39,10 +39,7 @@ function finishQuiz() {
 }
 function next() {
     const selected = document.querySelector("input[type='radio']:checked")
-    // if (!selected) {
-    //     alert("Select an option")
-    //     return
-    // }
+
     nextButton.disabled = true
     quizzes[currentIdx].selected = selected.value
     console.log(selected.value)
@@ -132,6 +129,7 @@ function displayQuizz() {
     console.log(options)
     quizzesSection.replaceChildren()
     quizzesSection.appendChild(p)
+    options.sort((a,b) => a.title.localeCompare(b.title));
     options.forEach((option) => {
         const radio = document.createElement("input")
 
