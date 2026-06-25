@@ -3,42 +3,54 @@ let time = 0
 let currentIdx = 0
 let quizzes = []
 let timerFlag = true
+let selectedFlag = false
 const loading = document.getElementById("loading")
 const quizzesSection = document.getElementById("quizzes")
 
 const startButton = document.getElementById("startButton")
 startButton.addEventListener("click", startQuizz)
 
+const restartButton = document.getElementById("restartButton")
+restartButton.addEventListener("click", startQuizz)
+
 const timer = document.getElementById("timer")
 
 const nextButton = document.getElementById("nextButton")
 nextButton.addEventListener("click", next)
 
-
+const resultSection = document.getElementById("resultSection")
 
 function finishQuiz() {
+    let correctCount = 0
+    quizzes.forEach((quiz) => {
+        if (quiz.correct_answer == quiz.selected) correctCount++
+    })
+    quizzesSection.style.display = 'none'
+    nextButton.style.display = 'none'
+    resultSection.style.display = 'flex'
+    document.getElementById('score').innerHTML = correctCount
+    document.getElementById('totalQuestion').innerHTML = quizzes.length
     startButton.disabled = false
     timerFlag = true
     currentIdx = 0
+    timer.style.display = 'none'
+    document.getElementById('timeTaken').innerHTML = time
     time = 0
 }
 function next() {
     const selected = document.querySelector("input[type='radio']:checked")
-    if (!selected) {
-        alert("Select an option")
-        return
-    }
+    // if (!selected) {
+    //     alert("Select an option")
+    //     return
+    // }
+    nextButton.disabled = true
     quizzes[currentIdx].selected = selected.value
     console.log(selected.value)
     console.log(quizzes[currentIdx])
     if (currentIdx === quizzes.length - 1) {
         timerFlag = false
         startTimer()
-        let correctCount = 0
-        quizzes.forEach((quiz) => {
-            if (quiz.correct_answer == quiz.selected) correctCount++
-        })
-        alert(`Score: ${correctCount}`)
+
         finishQuiz()
     }
     else {
@@ -55,7 +67,7 @@ function startTimer() {
     }
     timerId = setInterval(() => {
         time += 1
-        timer.innerHTML = time
+        timer.innerHTML = `Time: ${time}`
     }, 1000)
 }
 
@@ -64,6 +76,7 @@ function startQuizz() {
     const buttonDiv = document.getElementById("startButtonDiv")
     buttonDiv.style.display = 'none'
     nextButton.style.display = 'block'
+    resultSection.style.display = 'none'
     fetchQuizzes()
 }
 
@@ -77,7 +90,7 @@ async function fetchQuizzes() {
         console.log(data)
         quizzes = data["results"]
         console.log(quizzes)
-        timer.innerHTML = time
+        timer.innerHTML = `Time: 0`
         startTimer()
         displayQuizz()
     }
@@ -129,6 +142,8 @@ function displayQuizz() {
         const label = document.createElement("label")
         label.htmlFor = radio.id
         label.innerHTML = option.title
+
+        radio.addEventListener('change', () => nextButton.disabled = false)
         quizzesSection.appendChild(radio)
         quizzesSection.appendChild(label)
         quizzesSection.appendChild(document.createElement("br"))
