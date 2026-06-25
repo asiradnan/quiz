@@ -31,7 +31,7 @@ body h1 {
 
 #startButton {
     font-size: 500%;
-    padding: 25px;
+    padding: 24px;
     border-radius: 20px;
     margin: auto;
     font-family: 'DM Sans';
@@ -39,12 +39,42 @@ body h1 {
     border-color: var(--primary);
 }
 
-#nextButton{
-    display: none;
+#nextButtonDiv{
+    display: flex;
+    justify-content: flex-end;
 }
-button{
+
+#nextButton {
+    display: none;
+    font-size: 120%;
+    border-radius: 8px;
+    padding: 4px 8px 4px 8px;
+    font-family: 'DM Sans';
+    margin-right: 2%;
+}
+
+button {
     cursor: pointer;
 }
-button:disabled{
+
+button:disabled {
     cursor: not-allowed;
+}
+
+#timer {
+    text-align: right;
+    font-size: 200%;
+    padding: 2%;
+    margin: 0;
+    color: var(--primary);
+}
+
+#quizzes {
+    margin: 5%;
+    font-size: 150%;
+}
+input[type='radio']{
+    accent-color: var(--primary);
+    margin: 15px;
+    transform: scale(1.5);
 }

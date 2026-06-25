@@ -7,14 +7,14 @@ const loading = document.getElementById("loading")
 const quizzesSection = document.getElementById("quizzes")
 
 const startButton = document.getElementById("startButton")
+startButton.addEventListener("click", startQuizz)
 
 const timer = document.getElementById("timer")
 
 const nextButton = document.getElementById("nextButton")
-
 nextButton.addEventListener("click", next)
 
-startButton.addEventListener("click", startQuizz)
+
 
 function finishQuiz() {
     startButton.disabled = false
@@ -61,8 +61,12 @@ function startTimer() {
 
 function startQuizz() {
     startButton.disabled = true
+    const buttonDiv = document.getElementById("startButtonDiv")
+    buttonDiv.style.display = 'none'
+    nextButton.style.display = 'block'
     fetchQuizzes()
 }
+
 async function fetchQuizzes() {
     isLoading = true
     displayConditionalLoading()
