@@ -20,6 +20,41 @@ nextButton.addEventListener("click", next)
 
 const resultSection = document.getElementById("resultSection")
 
+
+function startQuizz() {
+    startButton.disabled = true
+    const buttonDiv = document.getElementById("startButtonDiv")
+    buttonDiv.style.display = 'none'
+    nextButton.style.display = 'block'
+    resultSection.style.display = 'none'
+    fetchQuizzes()
+}
+
+async function fetchQuizzes() {
+    isLoading = true
+    displayConditionalLoading()
+    const difficulty = document.getElementById("difficulty").value
+    const amount = document.getElementById("amount").value
+    try {
+        const response = await fetch(`https://opentdb.com/api.php?amount=${amount}&difficulty=${difficulty}`)
+        const data = await response.json()
+
+        console.log(data)
+        quizzes = data["results"]
+        console.log(quizzes)
+        timer.innerHTML = `Time: 0`
+        startTimer()
+        displayQuizz()
+    }
+    catch (error) {
+        console.log(error)
+    }
+    finally {
+        isLoading = false
+        displayConditionalLoading()
+    }
+}
+
 function finishQuiz() {
     let correctCount = 0
     quizzes.forEach((quiz) => {
@@ -68,37 +103,7 @@ function startTimer() {
     }, 1000)
 }
 
-function startQuizz() {
-    startButton.disabled = true
-    const buttonDiv = document.getElementById("startButtonDiv")
-    buttonDiv.style.display = 'none'
-    nextButton.style.display = 'block'
-    resultSection.style.display = 'none'
-    fetchQuizzes()
-}
 
-async function fetchQuizzes() {
-    isLoading = true
-    displayConditionalLoading()
-    try {
-        const response = await fetch("https://opentdb.com/api.php?amount=5")
-        const data = await response.json()
-
-        console.log(data)
-        quizzes = data["results"]
-        console.log(quizzes)
-        timer.innerHTML = `Time: 0`
-        startTimer()
-        displayQuizz()
-    }
-    catch (error) {
-        console.log(error)
-    }
-    finally {
-        isLoading = false
-        displayConditionalLoading()
-    }
-}
 
 function displayConditionalLoading() {
     if (isLoading) {
@@ -129,7 +134,7 @@ function displayQuizz() {
     console.log(options)
     quizzesSection.replaceChildren()
     quizzesSection.appendChild(p)
-    options.sort((a,b) => a.title.localeCompare(b.title));
+    options.sort((a, b) => a.title.localeCompare(b.title));
     options.forEach((option) => {
         const radio = document.createElement("input")
 
