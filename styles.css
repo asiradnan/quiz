@@ -21,6 +21,25 @@ body h1 {
     font-family: 'Bebas Neue';
 }
 
+#filteringSection {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px;
+}
+
+select {
+    padding: 5px;
+    border-radius: 8px;
+    font-family: 'DM Sans';
+    border-color: var(--primary);
+    cursor: pointer;
+    /* appearance: none; */
+}
+
+select:focus {
+    outline: none;
+}
+
 #startButtonDiv {
     width: 100%;
     display: flex;
@@ -119,13 +138,12 @@ input[type='radio'] {
 footer {
     position: fixed;
     left: 0;
-    bottom: 0;
+    bottom: 20px;
     width: 100%;
     display: grid;
     grid-template-columns: auto auto;
     align-items: center;
     font-family: 'DM Sans';
-    margin: 10px;
 }
 
 footer a {

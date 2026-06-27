@@ -24,7 +24,9 @@ const resultSection = document.getElementById("resultSection")
 function startQuizz() {
     startButton.disabled = true
     const buttonDiv = document.getElementById("startButtonDiv")
+    const filteringSection = document.getElementById("filteringSection")
     buttonDiv.style.display = 'none'
+    filteringSection.style.display = 'none'
     nextButton.style.display = 'block'
     resultSection.style.display = 'none'
     fetchQuizzes()
