@@ -116,6 +116,44 @@ input[type='radio'] {
     font-size: 300%;
 }
 
+footer {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    display: grid;
+    grid-template-columns: auto auto;
+    align-items: center;
+    font-family: 'DM Sans';
+    margin: 10px;
+}
+
+footer a {
+    height: 24px;
+    display: grid;
+    grid-template-rows: auto;
+    grid-template-columns: auto auto;
+    align-content: center;
+    justify-content: center;
+    align-items: center;
+    text-decoration: none;
+    color: #0a0a0a;
+}
+
+.footer-left {
+    justify-self: end;
+    margin-right: 25px;
+}
+
+.footer-right {
+    justify-self: start;
+    margin-left: 25px;
+}
+
+footer a span {
+    margin-left: 5px;
+}
+
 @media screen and (max-width: 576px) {
     #startButton {
         font-size: 250%;
